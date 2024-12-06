@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Analisis{% endblock %}
+
+{% block content%}
+    <h2 class="text-center mt-5">Análisis de Movimientos</h2>
+    <canvas id="graficoMovimientos" width="400" height="200"></canvas>
+{% endblock %}
+
+{% block script %}
+<script>
+    var ctx = document.getElementById('graficoMovimientos').getContext('2d');
+    var graficoMovimientos = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for movimiento in movimientos %}"{{ movimiento[0] }}",{% endfor %}],
+            datasets: [{
+                label: 'Montos',
+                data: [{% for movimiento in movimientos %}{{ movimiento[1] }},{% endfor %}],
+                backgroundColor: [{% for movimiento in movimientos %}
+                    '{{ "rgba(75, 192, 192, 0.2)" if movimiento[2] == "ingreso" else "rgba(255, 99, 132, 0.2)" }}',{% endfor %}],
+                borderColor: [{% for movimiento in movimientos %}
+                    '{{ "rgba(75, 192, 192, 1)" if movimiento[2] == "ingreso" else "rgba(255, 99, 132, 1)" }}',{% endfor %}],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

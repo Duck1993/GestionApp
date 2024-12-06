@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Inicio{% endblock %}
+
+{% block content%}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body bg-success">
+                    <h2>Ingresos Totales</h2>
+                    <h4>$ {{ total_ingresos}}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body bg-danger">
+                    <h2>Egresos Totales</h2>
+                    <h4>$ {{ total_egresos}} </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body bg-primary">
+                    <h2>Saldo Total</h2>
+                    <h4>$ {{saldo_total}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="row mt-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h3>Agregar Movimiento Nuevo</h3>
+                <form action="/agregar_movimiento" method="post">
+                    <div class="mb-3">
+                        <label class="form-label" for="descripcion">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion" name="descripcion" requierd>
+                    </div>
+                     <div class="mb-3">
+                        <label class="form-label" for="monto">Monto</label>
+                        <input type="number" class="form-control" id="monto" name="monto" requierd>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="tipo">Tipo</label>
+                        <select class="form-select" id="tipo" name="tipo">
+                            <option value="ingreso">Ingreso</option>
+                            <option value="egreso">Egreso</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Agregar Movimiento</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <h3>Historial de Movimientos</h3>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Monto</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Fecha</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for movimiento in movimientos %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ movimiento[0]}}</td>
+                        <td>{{ movimiento[1]}}</td>
+                        <td>{{ movimiento[2]}}</td>
+                        <td>{{ movimiento[3]}}</td>
+                        <td>{{ movimiento[4]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+
